@@ -1,0 +1,481 @@
+:root {
+  --bg: #050505;
+  --bg-alt: #0f0f0f;
+  --fg: #f5f5f5;
+  --fg-muted: #bfbfbf;
+  --accent: #ffffff;
+  --border: #333333;
+  --shadow-soft: 0 0 25px rgba(255, 255, 255, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "JetBrains Mono", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top, #151515 0, #000 55%);
+  color: var(--fg);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 32px 12px;
+}
+
+.app-frame {
+  width: 100%;
+  max-width: 1100px;
+  background: linear-gradient(145deg, #050505, #101010);
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  padding: 20px 22px 18px;
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+  position: relative;
+}
+
+.app-frame::before {
+  content: "";
+  position: absolute;
+  inset: -140px;
+  background: radial-gradient(
+      circle at 0% 0%,
+      rgba(255, 255, 255, 0.08),
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at 100% 100%,
+      rgba(255, 255, 255, 0.06),
+      transparent 50%
+    );
+  opacity: 0;
+  pointer-events: none;
+  animation: glow 10s infinite alternate;
+}
+
+@keyframes glow {
+  0% {
+    opacity: 0.05;
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    opacity: 0.12;
+    transform: translate3d(8px, -6px, 0);
+  }
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  position: relative;
+  z-index: 1;
+}
+
+.title-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.title {
+  font-size: 1.4rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.subtitle {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  letter-spacing: 0.2em;
+}
+
+.badge {
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  padding: 4px 12px;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.toggle-group {
+  display: inline-flex;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  padding: 3px;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+}
+
+.toggle-btn {
+  border: none;
+  outline: none;
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  background: transparent;
+  color: var(--fg-muted);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.2s ease, transform 0.18s ease;
+}
+
+.toggle-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle at top,
+    rgba(255, 255, 255, 0.16),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.toggle-btn:hover::before {
+  opacity: 0.3;
+}
+
+.toggle-btn.active {
+  background: #f5f5f5;
+  color: #000;
+  transform: translateY(-0.5px);
+}
+
+.info-line {
+  font-size: 0.78rem;
+  color: var(--fg-muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: right;
+}
+.info-line span {
+  color: var(--accent);
+}
+
+.tables-container {
+  position: relative;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: rgba(5, 5, 5, 0.7);
+  overflow: hidden;
+  padding: 10px;
+  padding-top: 4px;
+  z-index: 1;
+}
+
+.month-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+/* .month-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.month-table.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+} */
+
+thead {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+thead tr {
+  background: linear-gradient(90deg, #111111, #050505);
+}
+
+th {
+  text-align: left;
+  padding: 10px 12px 8px;
+  font-weight: 500;
+  border-bottom: 1px solid var(--border);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 0.68rem;
+  color: var(--fg-muted);
+}
+
+tbody tr {
+  border-bottom: 1px solid rgba(60, 60, 60, 0.6);
+  background: transparent;
+  transition: background-color 0.18s ease, transform 0.18s ease,
+    box-shadow 0.18s ease;
+  animation: rowIn 0.35s ease forwards;
+  animation-delay: calc(var(--row-index, 0) * 0.012s);
+  opacity: 0;
+}
+
+@keyframes rowIn {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+tbody tr:hover {
+  background: rgba(245, 245, 245, 0.06);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+}
+
+td {
+  padding: 8px 12px;
+  vertical-align: top;
+}
+
+td:first-child {
+  width: 54px;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.78rem;
+  color: var(--fg-muted);
+}
+
+td:nth-child(2) {
+  width: 36%;
+  font-weight: 500;
+  color: var(--fg);
+}
+td:nth-child(3) {
+  color: var(--fg-muted);
+  font-size: 0.82rem;
+}
+
+.day-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.day-pill-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--fg-muted);
+}
+
+footer {
+  margin-top: 10px;
+  font-size: 0.7rem;
+  text-align: right;
+  color: var(--fg-muted);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+  .app-frame {
+    padding: 16px 14px 12px;
+    border-radius: 16px;
+  }
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .info-line {
+    text-align: left;
+  }
+  td:nth-child(3) {
+    font-size: 0.78rem;
+  }
+  .title {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .toggle-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column; /* <-- kritik: dikey yap */
+    gap: 6px;
+    padding: 6px;
+    border-radius: 14px;
+  }
+
+  .toggle-btn {
+    width: 100%;
+    text-align: center;
+    padding: 10px 12px;
+    letter-spacing: 0.12em; /* dar ekranda taşmayı azaltır */
+  }
+
+  .info-line {
+    text-align: left;
+  }
+}
+
+/* ---- Breakpoints ---- */
+
+/* Large desktop / wide monitors */
+@media (min-width: 1280px) {
+  .app-frame {
+    max-width: 1180px;
+  }
+  .title {
+    font-size: 1.5rem;
+  }
+}
+
+/* Laptop / normal desktop */
+@media (max-width: 1024px) {
+  .month-table {
+    min-width: 680px;
+  }
+  td:nth-child(2) {
+    width: 40%;
+  }
+}
+
+/* Tablet (portrait) */
+@media (max-width: 768px) {
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .toggle-group {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .toggle-btn {
+    flex: 1;
+    text-align: center;
+  }
+
+  .info-line {
+    text-align: left;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+  }
+
+  .month-table {
+    min-width: 640px;
+  }
+}
+
+/* Phone */
+@media (max-width: 520px) {
+  header {
+    gap: 10px;
+  }
+
+  .title {
+    font-size: 1.1rem;
+    line-height: 1.25;
+  }
+
+  .subtitle {
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+  }
+
+  /* Stack toggle buttons on phone (your previous fix, but stable) */
+  .toggle-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 6px;
+    border-radius: 14px;
+  }
+
+  .toggle-btn {
+    width: 100%;
+    padding: 10px 12px;
+    letter-spacing: 0.12em;
+    white-space: normal; /* allow wrapping on tiny screens */
+  }
+
+  /* Table readability: keep scroll, but reduce min width a bit */
+  .month-table {
+    min-width: 600px;
+    font-size: 0.82rem;
+  }
+
+  td {
+    padding: 8px 10px;
+  }
+
+  td:first-child {
+    width: 52px;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 360px) {
+  .month-table {
+    min-width: 560px;
+    font-size: 0.78rem;
+  }
+  .badge {
+    font-size: 0.68rem;
+    padding: 4px 10px;
+  }
+}
